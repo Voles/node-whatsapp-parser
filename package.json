@@ -1,0 +1,29 @@
+{
+  "name": "node-whatsapp-parser",
+  "version": "1.0.0",
+  "description": "WhatsApp Chat History parser for Node.js",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Voles/node-whatsapp-parser.git"
+  },
+  "keywords": [
+    "whatsapp",
+    "parser"
+  ],
+  "author": "Niels Dequeker",
+  "license": "MIT",
+  "engines": {
+    "node": ">=4.2.4"
+  },
+  "dependencies": {
+    "debug": "2.2.0",
+    "moment": "2.11.2"
+  },
+  "devDependencies": {
+    "assert": "1.3.0"
+  },
+  "scripts": {
+    "test": "mocha tests.js"
+  }
+}
