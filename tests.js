@@ -4,7 +4,7 @@ const assert = require('assert');
 const whatsappParser = require('./index');
 
 describe('the Whatsapp parser', () => {
-  describe('when the input is empty', () => {
+  describe('when the file does not exist', () => {
     it('should return an empty list', () => {
       whatsappParser
         .parseFile('')
@@ -28,6 +28,11 @@ describe('the Whatsapp parser', () => {
 
       it('should allow the dd/mm/yy hh:mm:ss format', () => {
         let output = whatsappParser._parseLine('30/01/16 12:51:20: Niels Dequeker: Test message content');
+        assert.deepEqual(output.date, new Date(2016, 0, 30, 12, 51, 20));
+      });
+
+      it('should allow the [dd/mm/yyyy, hh:mm:ss] format', () => {
+        let output = whatsappParser._parseLine('[30/01/2016, 12:51:20] Niels Dequeker: Test message content');
         assert.deepEqual(output.date, new Date(2016, 0, 30, 12, 51, 20));
       });
     });
@@ -70,7 +75,6 @@ describe('the Whatsapp parser', () => {
       whatsappParser
         .parseFile('./example-input.txt')
         .then((messages) => {
-          console.log(messages);
           assert.deepEqual(messages.length, 2);
           done();
         });

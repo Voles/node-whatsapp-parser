@@ -13,6 +13,10 @@ function parseFile(filepath) {
     .then(parseLines)
     .then(filterMessagesWithoutContent)
     .catch((err) => {
+      if (err.errno === -2) {
+        return [];
+      }
+
       debug(err.message);
     });
 }
@@ -47,7 +51,9 @@ function parseLine(line) {
   var rawParts = getParts(line);
 
   var result = {
-    date: parseDate(rawParts.date),
+    date: rawParts.version === 1 ?
+      parseDateForFormatV1(rawParts.date) :
+      parseDateForFormatV2(rawParts.date),
     author: parseAuthor(rawParts.author),
     content: parseContent(rawParts.content)
   };
@@ -60,16 +66,40 @@ function parseLine(line) {
 }
 
 function getParts(line) {
-  var splited = line.split(': ');
+  return line.startsWith('[') ?
+    getPartsFromLineInExportFormatV2(line) :
+    getPartsFromLineInExportFormatV1(line);
+}
+
+function getPartsFromLineInExportFormatV1(line) {
+  var splitted = line.split(': ');
+
   return {
-    date: splited[0],
-    author: splited[1],
-    content: splited[2]
+    date: splitted[0],
+    author: splitted[1],
+    content: splitted[2],
+    version: 1
   };
 }
 
-function parseDate(input) {
+function getPartsFromLineInExportFormatV2(line) {
+  var splitted = line.split('] ');
+  var splittedSecondPart = splitted[1].split(': ');
+
+  return {
+    date: splitted[0].substr(1, 20),
+    author: splittedSecondPart[0],
+    content: splittedSecondPart[1],
+    version: 2
+  };
+}
+
+function parseDateForFormatV1(input) {
   return moment(input, 'DD-MM-YY HH:mm:ss').toDate();
+}
+
+function parseDateForFormatV2(input) {
+  return moment(input, 'DD/MM/YYYY HH:mm:ss').toDate();
 }
 
 function parseAuthor(input) {
