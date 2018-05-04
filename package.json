@@ -21,7 +21,8 @@
     "moment": "2.22.1"
   },
   "devDependencies": {
-    "assert": "1.4.1"
+    "assert": "1.4.1",
+    "mocha": "5.1.1"
   },
   "scripts": {
     "test": "mocha tests.js"
