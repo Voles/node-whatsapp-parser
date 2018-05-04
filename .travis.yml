@@ -11,7 +11,7 @@ before_install:
   - npm --version
 
 install:
-  - npm ci
+  - npm install
 
 after_success:
   - npx test
