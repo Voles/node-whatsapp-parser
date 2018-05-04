@@ -1,4 +1,4 @@
-# node-whatsapp-parser
+# node-whatsapp-parser [![Build Status](https://travis-ci.com/Voles/node-whatsapp-parser.svg?branch=master)](https://travis-ci.com/Voles/node-whatsapp-parser)
 [WhatsApp Chat History](https://www.whatsapp.com/faq/en/s60/21055276) parser for Node.js
 
 ## Usage
