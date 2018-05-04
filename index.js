@@ -28,7 +28,7 @@ function readFile(path) {
         reject(err);
       }
 
-      resolve(data.toString('utf8'));
+      resolve(data ? data.toString('utf8') : '');
     });
   });
 }
