@@ -1,17 +1,4 @@
 language: node_js
-
 node_js:
   - 10
-
-cache:
-  directories:
-    - $HOME/.npm
-
-before_install:
-  - npm --version
-
-install:
-  - npm install
-
-after_success:
-  - npx test
+  
