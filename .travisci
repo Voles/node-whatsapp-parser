@@ -1,0 +1,22 @@
+language: node_js
+
+node_js:
+  - 10
+
+cache:
+  directories:
+    - $HOME/.npm
+
+before_install:
+  - npm --version
+
+install: |
+  npm ci;
+  checksum=$(md5sum package-lock.json);
+  npm install --package-lock-only;
+  if ! echo ${checksum} | md5sum --quiet -c -; then
+    echo "package-lock.json was modified unexpectedly. Please rebuild it using npm@$(npm -v) and commit the changes.";
+    exit 1;
+  fi
+
+after_success: npx test
